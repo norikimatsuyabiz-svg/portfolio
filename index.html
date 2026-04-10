@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noriki Matsuya — AI Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink2: #4a4a4a;
+      --ink3: #8a8a8a;
+      --rule: #e2e2e2;
+      --bg: #fafaf8;
+      --warm: #f5f3ee;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; border-bottom: 1px solid var(--rule); background: var(--bg); position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--ink); }
+    nav ul { display: flex; gap: 2.5rem; list-style: none; }
+    nav ul a { font-size: 0.8rem; color: var(--ink3); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+    nav ul a:hover { color: var(--ink); }
+    .nav-cta { font-size: 0.78rem; font-weight: 500; color: var(--ink); text-decoration: none; border: 1px solid var(--ink); padding: 0.4rem 1.1rem; border-radius: 2px; transition: background 0.2s, color 0.2s; }
+    .nav-cta:hover { background: var(--ink); color: var(--bg); }
+
+    .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 82vh; border-bottom: 1px solid var(--rule); }
+    .hero-left { padding: 5rem 3rem 4rem; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--rule); }
+    .hero-right { padding: 5rem 3rem 4rem; background: var(--warm); display: flex; flex-direction: column; justify-content: center; }
+    .eyebrow { font-size: 0.7rem; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--ink3); margin-bottom: 2rem; }
+    h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1.08; color: var(--ink); font-weight: 400; margin-bottom: 2.5rem; }
+    h1 em { font-style: italic; color: var(--ink2); }
+    .hero-desc { font-size: 0.9rem; color: var(--ink2); line-height: 1.9; max-width: 340px; }
+    .hero-meta { margin-top: auto; padding-top: 3rem; }
+    .meta-row { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--ink3); border-top: 1px solid var(--rule); padding-top: 1rem; }
+
+    .avatar-wrap { width: 120px; height: 120px; border-radius: 50%; background: var(--rule); margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; border: 1px solid var(--rule); }
+    .avatar-initials { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--ink2); }
+    .profile-name { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--ink); margin-bottom: 0.3rem; }
+    .profile-role { font-size: 0.82rem; color: var(--ink3); letter-spacing: 0.5px; margin-bottom: 2rem; }
+    .info-list { list-style: none; border-top: 1px solid var(--rule); }
+    .info-list li { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; border-bottom: 1px solid var(--rule); font-size: 0.8rem; }
+    .info-list li span:first-child { color: var(--ink3); }
+    .info-list li span:last-child { color: var(--ink); font-weight: 500; }
+    .info-list li a { color: var(--ink); font-weight: 500; text-decoration: none; }
+    .info-list li a:hover { text-decoration: underline; }
+
+    section { padding: 5rem 3rem; max-width: 1100px; margin: 0 auto; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; border-bottom: 1px solid var(--rule); padding-bottom: 1rem; }
+    .section-num { font-size: 0.65rem; color: var(--ink3); letter-spacing: 2px; font-weight: 500; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--ink); font-weight: 400; }
+
+    .skills-table { width: 100%; border-collapse: collapse; }
+    .skills-table tr { border-bottom: 1px solid var(--rule); }
+    .skills-table tr:first-child { border-top: 1px solid var(--rule); }
+    .skills-table td { padding: 1.4rem 0; vertical-align: middle; }
+    .skill-name { font-size: 0.9rem; font-weight: 500; color: var(--ink); width: 240px; }
+    .skill-category { font-size: 0.7rem; color: var(--ink3); letter-spacing: 1px; text-transform: uppercase; width: 160px; }
+    .skill-bar-track-wrap { display: flex; align-items: center; gap: 1rem; }
+    .skill-bar-track { flex: 1; height: 1px; background: var(--rule); position: relative; }
+    .skill-bar-fill { height: 1px; background: var(--ink); position: absolute; left: 0; top: 0; }
+    .skill-pct { font-size: 0.75rem; color: var(--ink3); width: 36px; text-align: right; }
+    .skill-tools { display: flex; gap: 6px; flex-wrap: wrap; width: 200px; }
+    .chip { font-size: 0.65rem; padding: 3px 9px; border: 1px solid var(--rule); border-radius: 2px; color: var(--ink2); }
+
+    .timeline { display: grid; gap: 0; }
+    .tl-item { display: grid; grid-template-columns: 160px 1px 1fr; gap: 0 2rem; padding-bottom: 3rem; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-date { font-size: 0.75rem; color: var(--ink3); padding-top: 3px; text-align: right; line-height: 1.4; }
+    .tl-line { width: 1px; background: var(--rule); position: relative; }
+    .tl-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink); position: absolute; top: 4px; left: 50%; transform: translateX(-50%); }
+    .tl-dot.open { background: var(--bg); border: 1.5px solid var(--ink3); }
+    .tl-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); font-weight: 400; margin-bottom: 0.4rem; }
+    .tl-org { font-size: 0.75rem; color: var(--ink3); margin-bottom: 0.7rem; }
+    .tl-desc { font-size: 0.83rem; color: var(--ink2); line-height: 1.85; }
+
+    .stats-strip { background: var(--ink); color: var(--bg); display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .stat-item { padding: 3rem; border-right: 1px solid rgba(255,255,255,0.12); text-align: center; }
+    .stat-item:last-child { border-right: none; }
+    .stat-n { font-family: 'DM Serif Display', serif; font-size: 3rem; font-weight: 400; line-height: 1; margin-bottom: 0.5rem; }
+    .stat-n.small { font-size: 1.6rem; margin-bottom: 0.3rem; padding-top: 0.6rem; }
+    .stat-l { font-size: 0.72rem; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; }
+    .stat-sub { font-size: 0.65rem; color: rgba(255,255,255,0.35); margin-top: 0.3rem; letter-spacing: 0.5px; }
+
+    .contact-strip { padding: 5rem 3rem; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .contact-text h3 { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--ink); font-weight: 400; margin-bottom: 0.5rem; }
+    .contact-text p { font-size: 0.85rem; color: var(--ink3); }
+    .contact-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; }
+    .contact-btn { font-size: 0.8rem; font-weight: 500; padding: 0.9rem 2.2rem; background: var(--ink); color: var(--bg); border: none; border-radius: 2px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap; text-decoration: none; display: inline-block; }
+    .contact-btn:hover { opacity: 0.8; }
+    .contact-email { font-size: 0.78rem; color: var(--ink3); text-decoration: none; }
+    .contact-email:hover { color: var(--ink); text-decoration: underline; }
+
+    footer { padding: 1.5rem 3rem; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--ink3); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 3rem 1.5rem; }
+      .hero-right { padding: 3rem 1.5rem; }
+      .stats-strip { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); padding: 2rem; }
+      section { padding: 3rem 1.5rem; }
+      .skills-table { display: block; overflow-x: auto; }
+      .tl-item { grid-template-columns: 80px 1px 1fr; }
+      .contact-strip { padding: 3rem 1.5rem; flex-direction: column; align-items: flex-start; }
+      .contact-actions { align-items: flex-start; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Noriki Matsuya — AI Portfolio</div>
+    <ul>
+      <li><a href="#about-sec">About</a></li>
+      <li><a href="#skills-sec">Skills</a></li>
+      <li><a href="#career-sec">Career</a></li>
+    </ul>
+    <a class="nav-cta" href="mailto:n.matsuya.ai@gmail.com">Contact ↗</a>
+  </nav>
+
+  <div class="hero" id="about-sec">
+    <div class="hero-left">
+      <div>
+        <div class="eyebrow">AI-Native Engineer — Portfolio 2026</div>
+        <h1>AIで、<br>業務の<br><em>未来を</em><br>設計する。</h1>
+      </div>
+      <div>
+        <p class="hero-desc">
+          設備保全の現場経験を持ちながら、AIエージェント開発・プロンプトエンジニアリング・業務自動化を専門として習得中。
+          人とAIが協働する職場環境の設計に取り組んでいます。
+        </p>
+        <div class="hero-meta">
+          <div class="meta-row">
+            <span>現在地：日本</span>
+            <span>ステータス：学習中 / 転職活動準備</span>
+            <span>2026年</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="avatar-wrap"><div class="avatar-initials">NM</div></div>
+      <div class="profile-name">Noriki Matsuya</div>
+      <div class="profile-role">設備保全 → AI-Native Engineer</div>
+      <ul class="info-list">
+        <li><span>専門領域</span><span>AIエージェント開発</span></li>
+        <li><span>副業</span><span>施設管理サポート</span></li>
+        <li><span>学習中</span><span>プロンプト / 画像生成 / API</span></li>
+        <li><span>目標</span><span>AI活用コンサルティング</span></li>
+        <li><span>連絡先</span><a href="mailto:n.matsuya.ai@gmail.com">n.matsuya.ai@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-n">30+</div>
+      <div class="stat-l">Prompts Created</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n small">In Progress</div>
+      <div class="stat-l">Workflow Automation</div>
+      <div class="stat-sub">現在構築中</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-n">5+</div>
+      <div class="stat-l">AI Tools in Use</div>
+    </div>
+  </div>
+
+  <section id="skills-sec">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Skills</span>
+    </div>
+    <table class="skills-table">
+      <tbody>
+        <tr>
+          <td class="skill-name">プロンプトエンジニアリング</td>
+          <td class="skill-category">AI / LLM</td>
+          <td><div class="skill-bar-track-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div><span class="skill-pct">75%</span></div></td>
+          <td class="skill-tools"><span class="chip">Claude</span><span class="chip">ChatGPT</span><span class="chip">Gemini</span></td>
+        </tr>
+        <tr>
+          <td class="skill-name">AI画像生成 / デザイン</td>
+          <td class="skill-category">Creative AI</td>
+          <td><div class="skill-bar-track-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%"></div></div><span class="skill-pct">60%</span></div></td>
+          <td class="skill-tools"><span class="chip">Midjourney</span><span class="chip">Canva</span></td>
+        </tr>
+        <tr>
+          <td class="skill-name">ワークフロー自動化</td>
+          <td class="skill-category">Automation</td>
+          <td><div class="skill-bar-track-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" style="width:10%"></div></div><span class="skill-pct">10%</span></div></td>
+          <td class="skill-tools"><span class="chip">Make</span><span class="chip">API連携</span></td>
+        </tr>
+        <tr>
+          <td class="skill-name">Python スクリプティング</td>
+          <td class="skill-category">Development</td>
+          <td><div class="skill-bar-track-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" style="width:45%"></div></div><span class="skill-pct">45%</span></div></td>
+          <td class="skill-tools"><span class="chip">Python</span><span class="chip">Git</span><span class="chip">VS Code</span></td>
+        </tr>
+        <tr>
+          <td class="skill-name">業務効率化コンサルティング</td>
+          <td class="skill-category">Consulting</td>
+          <td><div class="skill-bar-track-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" style="width:20%"></div></div><span class="skill-pct">20%</span></div></td>
+          <td class="skill-tools"><span class="chip">設備保全</span><span class="chip">業務設計</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="career-sec" style="border-top: 1px solid var(--rule);">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Career & Learning</span>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-date">2026.04<br>— 現在</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <div class="tl-title">AIスクール 受講中</div>
+          <div class="tl-org">プロンプトエンジニアリング / AI画像生成 / エージェント開発</div>
+          <p class="tl-desc">体系的なカリキュラムでAI技術を習得。プロンプトライブラリ30選の構築、自動化ワークフロー開発など実践的なプロジェクトに取り組んでいる。</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">現在</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <div class="tl-title">設備保全（本業）/ 施設管理（副業）</div>
+          <p class="tl-desc">設備保全の現場経験を基盤に、施設管理のオペレーション改善にAIを活用。顧客対応自動化・業務効率化の実案件を推進中。</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">2026<br>目標</div>
+        <div class="tl-line"><div class="tl-dot open"></div></div>
+        <div class="tl-body">
+          <div class="tl-title">AI-Native Engineer へのキャリアチェンジ</div>
+          <div class="tl-org">AIエージェント開発 / 業務効率化コンサルティング</div>
+          <p class="tl-desc">現場知識とAI技術を掛け合わせ、企業のAI活用を推進するエンジニア・コンサルタントとして活動することを目指す。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="contact-strip">
+    <div class="contact-text">
+      <h3>一緒に取り組みませんか</h3>
+      <p>AI活用・業務改善・プロンプト設計についてのご相談をお待ちしています</p>
+    </div>
+    <div class="contact-actions">
+      <a class="contact-btn" href="mailto:n.matsuya.ai@gmail.com">メールで連絡する →</a>
+      <a class="contact-email" href="mailto:n.matsuya.ai@gmail.com">n.matsuya.ai@gmail.com</a>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Noriki Matsuya — AI Portfolio</span>
+    <span>AI-Native Engineer in progress</span>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const el = document.querySelector(a.getAttribute('href'));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+</body>
+</html>
